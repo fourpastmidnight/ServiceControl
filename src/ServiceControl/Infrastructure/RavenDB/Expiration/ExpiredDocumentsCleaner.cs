@@ -21,7 +21,9 @@
             threshold = SystemTime.UtcNow.Add(-settings.ErrorRetentionPeriod);
 
             logger.Debug("Trying to find expired FailedMessage documents to delete (with threshold {0})", threshold.ToString(Default.DateTimeFormatsToWrite, CultureInfo.InvariantCulture));
-            ErrorMessageCleaner.Clean(deletionBatchSize, database, threshold, token);
+
+            //todo: r needs its own runner
+            //ErrorMessageCleaner.Clean(deletionBatchSize, database, threshold, token);
 
             threshold = SystemTime.UtcNow.Add(-settings.EventsRetentionPeriod);
 

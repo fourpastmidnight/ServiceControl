@@ -1,13 +1,10 @@
 namespace ServiceControl.Infrastructure.Extensions
 {
     using System;
-    using System.Collections.Generic;
     using System.Globalization;
     using System.Linq;
     using System.Linq.Expressions;
-    using System.Text;
     using CompositeViews.Messages;
-    using MessageFailures;
     using Nancy;
     using Raven.Client;
     using Raven.Client.Linq;
@@ -130,55 +127,56 @@ namespace ServiceControl.Infrastructure.Extensions
                 return source;
             }
 
-            var filters = status.Replace(" ", String.Empty).Split(',');
-            var excludes = new List<int>();
-            var includes = new List<int>();
+            //todo: messages view
+            //var filters = status.Replace(" ", String.Empty).Split(',');
+            //var excludes = new List<int>();
+            //var includes = new List<int>();
 
-            foreach (var filter in filters)
-            {
-                FailedMessageStatus failedMessageStatus;
+            //foreach (var filter in filters)
+            //{
+            //    FailedMessageStatus failedMessageStatus;
 
-                if (filter.StartsWith("-"))
-                {
-                    if (Enum.TryParse(filter.Substring(1), true, out failedMessageStatus))
-                    {
-                        excludes.Add((int)failedMessageStatus);
-                    }
+            //    if (filter.StartsWith("-"))
+            //    {
+            //        if (Enum.TryParse(filter.Substring(1), true, out failedMessageStatus))
+            //        {
+            //            excludes.Add((int)failedMessageStatus);
+            //        }
 
-                    continue;
-                }
+            //        continue;
+            //    }
 
-                if (Enum.TryParse(filter, true, out failedMessageStatus))
-                {
-                    includes.Add((int)failedMessageStatus);
-                }
-            }
+            //    if (Enum.TryParse(filter, true, out failedMessageStatus))
+            //    {
+            //        includes.Add((int)failedMessageStatus);
+            //    }
+            //}
 
-            var sb = new StringBuilder();
+            //var sb = new StringBuilder();
 
-            sb.Append("((");
-            if (includes.Count == 0)
-            {
-                sb.Append("*");
-            }
-            else
-            {
-                sb.Append(String.Join(" OR ", includes.ToArray()));
-            }
+            //sb.Append("((");
+            //if (includes.Count == 0)
+            //{
+            //    sb.Append("*");
+            //}
+            //else
+            //{
+            //    sb.Append(String.Join(" OR ", includes.ToArray()));
+            //}
 
-            sb.Append(")");
+            //sb.Append(")");
 
-            if (excludes.Count > 0)
-            {
-                sb.Append(" AND NOT (");
-                sb.Append(String.Join(" OR ", excludes.ToArray()));
-                sb.Append(")");
-            }
+            //if (excludes.Count > 0)
+            //{
+            //    sb.Append(" AND NOT (");
+            //    sb.Append(String.Join(" OR ", excludes.ToArray()));
+            //    sb.Append(")");
+            //}
 
-            sb.Append(")");
+            //sb.Append(")");
 
-            source.AndAlso();
-            source.Where($"Status: {sb}");
+            //source.AndAlso();
+            //source.Where($"Status: {sb}");
 
             return source;
         }

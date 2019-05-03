@@ -3,7 +3,7 @@
     using System.Threading.Tasks;
     using Hosting;
 
-    abstract class AbstractCommand
+    public abstract class AbstractCommand
     {
         public abstract Task Execute(HostArguments args);
     }

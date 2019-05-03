@@ -9,7 +9,7 @@ namespace Particular.ServiceControl.Hosting
     using global::ServiceControl.Hosting.Commands;
     using ServiceBus.Management.Infrastructure.Settings;
 
-    class HostArguments
+    public class HostArguments
     {
         public HostArguments(string[] args)
         {
@@ -120,7 +120,7 @@ namespace Particular.ServiceControl.Hosting
                     "Import failed error messages",
                     s =>
                     {
-                        Commands = new List<Type> {typeof(ImportFailedErrorsCommand)};
+                        //Commands = new List<Type> {typeof(ImportFailedErrorsCommand)};
                         executionMode = ExecutionMode.ImportFailedErrors;
                     }
                 }
