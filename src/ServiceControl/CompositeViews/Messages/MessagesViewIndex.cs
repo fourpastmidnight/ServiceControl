@@ -5,7 +5,6 @@ namespace ServiceControl.CompositeViews.Messages
     using Contracts.Operations;
     using Lucene.Net.Analysis.Standard;
     using MessageAuditing;
-    using MessageFailures;
     using Raven.Abstractions.Indexing;
     using Raven.Client.Indexes;
 
@@ -30,28 +29,29 @@ namespace ServiceControl.CompositeViews.Messages
                     ConversationId = (string)message.MessageMetadata["ConversationId"]
                 });
 
-            AddMap<FailedMessage>(messages => from message in messages
-                where message.Status != FailedMessageStatus.Resolved
-                let last = message.ProcessingAttempts.Last()
-                select new SortAndFilterOptions
-                {
-                    MessageId = last.MessageId,
-                    MessageType = (string)last.MessageMetadata["MessageType"],
-                    IsSystemMessage = (bool)last.MessageMetadata["IsSystemMessage"],
-                    Status = message.Status == FailedMessageStatus.Archived
-                        ? MessageStatus.ArchivedFailure
-                        : message.ProcessingAttempts.Count == 1
-                            ? MessageStatus.Failed
-                            : MessageStatus.RepeatedFailure,
-                    TimeSent = (DateTime)last.MessageMetadata["TimeSent"],
-                    ProcessedAt = last.AttemptedAt,
-                    ReceivingEndpointName = ((EndpointDetails)last.MessageMetadata["ReceivingEndpoint"]).Name,
-                    CriticalTime = (TimeSpan?)null,
-                    ProcessingTime = (TimeSpan?)null,
-                    DeliveryTime = (TimeSpan?)null,
-                    Query = last.MessageMetadata.Select(_ => _.Value.ToString()).Union(new[] { string.Join(" ", last.Headers.Select(x => x.Value)) }).ToArray(),
-                    ConversationId = (string)last.MessageMetadata["ConversationId"]
-                });
+            //TODO: Figure out
+            //AddMap<FailedMessage>(messages => from message in messages
+            //    where message.Status != FailedMessageStatus.Resolved
+            //    let last = message.ProcessingAttempts.Last()
+            //    select new SortAndFilterOptions
+            //    {
+            //        MessageId = last.MessageId,
+            //        MessageType = (string)last.MessageMetadata["MessageType"],
+            //        IsSystemMessage = (bool)last.MessageMetadata["IsSystemMessage"],
+            //        Status = message.Status == FailedMessageStatus.Archived
+            //            ? MessageStatus.ArchivedFailure
+            //            : message.ProcessingAttempts.Count == 1
+            //                ? MessageStatus.Failed
+            //                : MessageStatus.RepeatedFailure,
+            //        TimeSent = (DateTime)last.MessageMetadata["TimeSent"],
+            //        ProcessedAt = last.AttemptedAt,
+            //        ReceivingEndpointName = ((EndpointDetails)last.MessageMetadata["ReceivingEndpoint"]).Name,
+            //        CriticalTime = (TimeSpan?)null,
+            //        ProcessingTime = (TimeSpan?)null,
+            //        DeliveryTime = (TimeSpan?)null,
+            //        Query = last.MessageMetadata.Select(_ => _.Value.ToString()).Union(new[] { string.Join(" ", last.Headers.Select(x => x.Value)) }).ToArray(),
+            //        ConversationId = (string)last.MessageMetadata["ConversationId"]
+            //    });
 
             Index(x => x.Query, FieldIndexing.Analyzed);
 

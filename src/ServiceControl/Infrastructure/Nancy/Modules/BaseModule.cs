@@ -5,7 +5,7 @@
     using Raven.Client;
     using Settings;
 
-    abstract class BaseModule : NancyModule
+    public abstract class BaseModule : NancyModule
     {
         protected string BaseUrl => Request.Url.SiteBase + Request.Url.BasePath;
 
