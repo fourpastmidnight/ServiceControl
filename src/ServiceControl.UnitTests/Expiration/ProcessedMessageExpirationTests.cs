@@ -2,13 +2,13 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
+    //using System.Diagnostics;
     using System.IO;
     using System.Linq;
     using System.Threading;
     using System.Threading.Tasks;
     using MessageAuditing;
-    using MessageFailures;
+    //using MessageFailures;
     using NUnit.Framework;
     using Raven.Client.Embedded;
     using ServiceControl.Infrastructure.RavenDB.Expiration;
@@ -237,33 +237,33 @@
             }
         }
 
-        [Test]
-        public void Errors_are_not_being_expired()
-        {
-            using (var documentStore = InMemoryStoreBuilder.GetInMemoryStore())
-            {
-                var failedMsg = new FailedMessage
-                {
-                    Id = "1"
-                };
+        //[Test]
+        //public void Errors_are_not_being_expired()
+        //{
+        //    using (var documentStore = InMemoryStoreBuilder.GetInMemoryStore())
+        //    {
+        //        var failedMsg = new FailedMessage
+        //        {
+        //            Id = "1"
+        //        };
 
-                using (var session = documentStore.OpenSession())
-                {
-                    session.Store(failedMsg);
-                    session.SaveChanges();
+        //        using (var session = documentStore.OpenSession())
+        //        {
+        //            session.Store(failedMsg);
+        //            session.SaveChanges();
 
-                    Debug.WriteLine(session.Advanced.GetMetadataFor(failedMsg)["Last-Modified"]);
-                }
+        //            Debug.WriteLine(session.Advanced.GetMetadataFor(failedMsg)["Last-Modified"]);
+        //        }
 
-                Thread.Sleep(100);
-                RunExpiry(documentStore, DateTime.UtcNow);
+        //        Thread.Sleep(100);
+        //        RunExpiry(documentStore, DateTime.UtcNow);
 
-                using (var session = documentStore.OpenSession())
-                {
-                    Assert.NotNull(session.Load<FailedMessage>(failedMsg.Id));
-                }
-            }
-        }
+        //        using (var session = documentStore.OpenSession())
+        //        {
+        //            Assert.NotNull(session.Load<FailedMessage>(failedMsg.Id));
+        //        }
+        //    }
+        //}
 
         private static int doctestrange = 999;
     }

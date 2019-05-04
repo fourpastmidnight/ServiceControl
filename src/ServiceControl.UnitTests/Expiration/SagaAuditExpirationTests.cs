@@ -2,10 +2,8 @@
 {
     using System;
     using System.Collections.Generic;
-    using System.Diagnostics;
     using System.Linq;
     using System.Threading;
-    using MessageFailures;
     using NUnit.Framework;
     using Raven.Client.Embedded;
     using ServiceControl.Infrastructure.RavenDB.Expiration;
@@ -175,32 +173,6 @@
             }
         }
 
-        [Test]
-        public void Errors_are_not_being_expired()
-        {
-            using (var documentStore = InMemoryStoreBuilder.GetInMemoryStore())
-            {
-                var failedMsg = new FailedMessage
-                {
-                    Id = "1"
-                };
-
-                using (var session = documentStore.OpenSession())
-                {
-                    session.Store(failedMsg);
-                    session.SaveChanges();
-
-                    Debug.WriteLine(session.Advanced.GetMetadataFor(failedMsg)["Last-Modified"]);
-                }
-
-                Thread.Sleep(100);
-                RunExpiry(documentStore, DateTime.UtcNow);
-
-                using (var session = documentStore.OpenSession())
-                {
-                    Assert.NotNull(session.Load<FailedMessage>(failedMsg.Id));
-                }
-            }
-        }
+       
     }
 }
