@@ -1,6 +1,6 @@
 namespace ServiceControl.CompositeViews.Messages
 {
-    class QueryResult
+    public class QueryResult
     {
         protected QueryResult(object results, QueryStatsInfo queryStatsInfo)
         {

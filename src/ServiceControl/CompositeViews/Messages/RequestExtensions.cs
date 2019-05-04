@@ -3,7 +3,7 @@ namespace ServiceControl.CompositeViews.Messages
     using System;
     using Nancy;
 
-    static class RequestExtensions
+    public static class RequestExtensions
     {
         public static Uri RedirectToRemoteUri(this Request request, string remoteUri)
         {

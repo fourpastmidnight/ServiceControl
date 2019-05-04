@@ -3,7 +3,7 @@
     using System;
     using System.Collections.Generic;
 
-    static class MetadataExtensions
+    public static class MetadataExtensions
     {
         public static T GetOrDefault<T>(this IDictionary<string, object> metadata, string key)
         {

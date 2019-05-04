@@ -9,7 +9,7 @@
     using Raven.Client;
     using ServiceBus.Management.Infrastructure.Installers;
 
-    class SatelliteImportFailuresHandler
+    public class SatelliteImportFailuresHandler
     {
         IDocumentStore store;
         string logPath;

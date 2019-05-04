@@ -3,7 +3,7 @@ namespace ServiceControl.Operations
     using System.Collections.Generic;
     using System.Threading.Tasks;
 
-    interface IEnrichImportedMessages
+    public interface IEnrichImportedMessages
     {
         bool EnrichErrors { get; }
         bool EnrichAudits { get; }

@@ -29,7 +29,7 @@ namespace ServiceControl
 
     // ReSharper disable once PartialTypeWithSinglePart
 
-    partial class StackTraceParser
+    public partial class StackTraceParser
     {
         const string Space = @"[\x20\t]";
         const string NotSpace = @"[^\x20\t]";

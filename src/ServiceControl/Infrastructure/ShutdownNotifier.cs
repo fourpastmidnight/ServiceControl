@@ -3,7 +3,7 @@
     using System;
     using System.Threading;
 
-    class ShutdownNotifier : IDisposable
+    public class ShutdownNotifier : IDisposable
     {
         public void Dispose()
         {
